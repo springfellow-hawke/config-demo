@@ -9,3 +9,6 @@ demo:
   value1: This is value one
   value2: This is value two
 
+io:
+  retry:
+    times: 10

@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,25 +17,35 @@ public class DumpController {
     @Value("${demo.value2}")
     private String value2;
 
+    @Value("${demo.value3:#{null}}")
+    private String value3;
+
+    @Value("${io.retry.times:5}")
+    private int retryCount;
+
+
     @GetMapping("/prop")
-    public ResponseEntity dump(){
-        return  ResponseEntity.ok(value1);
+    public ResponseEntity dump() {
+        return ResponseEntity.ok(value1);
     }
 
     @GetMapping("/prop/{name}")
-    public ResponseEntity displaySpecificProperty(@PathVariable String name){
+    public ResponseEntity displaySpecificProperty(@PathVariable String name) {
 
         String propValue = "Not set";
-        switch(name){
+        switch (name) {
             case "value1":
                 propValue = value1;
                 break;
             case "value2":
                 propValue = value2;
                 break;
+            case "value3":
+                propValue = value3;
+                break;
             default:
                 propValue = "not found";
         }
-        return ResponseEntity.ok(propValue);
+        return ResponseEntity.ok(String.format("Value for property : %s", propValue));
     }
 }
