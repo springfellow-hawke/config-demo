@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ConfigDemo
+
+demo:
+  value1: This is value one
+  value2: This is value two
+
