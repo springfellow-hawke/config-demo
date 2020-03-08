@@ -1,15 +1,21 @@
 package za.co.sfh.config.configdemo.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import za.co.sfh.config.configdemo.config.PubSubMessagingProperties;
 
 @RestController
 @RequestMapping("/config")
 public class DumpController {
+
+    @Autowired
+    private PubSubMessagingProperties pubSubMessagingProperties;
 
     @Value("${demo.value1}")
     private String value1;
@@ -47,5 +53,10 @@ public class DumpController {
                 propValue = "not found";
         }
         return ResponseEntity.ok(String.format("Value for property : %s", propValue));
+    }
+
+    @GetMapping(value = "/messaging", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PubSubMessagingProperties> getMessageProperties() {
+        return ResponseEntity.ok(pubSubMessagingProperties);
     }
 }

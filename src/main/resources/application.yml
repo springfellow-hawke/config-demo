@@ -12,3 +12,33 @@ demo:
 io:
   retry:
     times: 10
+
+#
+# Properties for the message subscription configuration
+#
+pubsubmessagetype:
+  modules:
+    - application_module_name: billingmodule
+      pub_sub_message_type: GenericMessage
+      topics_list: GenericTopic
+    - application_module_name: billingmodule
+      pub_sub_message_type: LoggingMessage
+      topics_list: LoggingTopic
+    - application_module_name: incidentmodule
+      pub_sub_message_type: GenericMessage
+      topics_list: GenericTopic
+
+  topics_required:
+    topic_names: TestTopic, BillingTopic, GenericTopic, IncidentTopic, IntegrationTopic, InventoryTopic, LoggingTopic, NotificationTopic, SystemGatewayTopic, WorkflowTopic
+
+  subscriptions:
+    - application_module_name: billingmodule
+      topic_name: BillingTopic
+      subscription_name: BillingTopicSub
+    - application_module_name: incidentmodule
+      topic_name: IncidentTopic
+      subscription_name: IncidentTopicSub
+    - application_module_name: integrationmodule
+      topic_name: IntegrationTopic
+      subscription_name: IntegrationTopicSub
+
